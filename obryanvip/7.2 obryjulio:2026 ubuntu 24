@@ -1,0 +1,64 @@
+FROM obryanvip/obryjulio:2025
+
+
+
+LABEL maintainer obry "obryanmvp@gmail.com"
+
+
+####para crear en la terminal
+#        docker build -t obryanvip/obryjulio:2024 /workspaces/matedockerandro/
+#     docker build -t obryanvip/obryjulio:2024 /workspaces/matedockerandro/
+
+#ENV REFRESHED_AT 2024-08-24
+
+#ENV VNC_RESOLUTION 1920x1080
+#ENV VNC_PW obryan
+
+# Switch to root user to install pakcages
+USER 0
+
+RUN set -x; \
+        apt update \
+        && apt -y upgrade
+
+RUN apt install -y software-properties-common sudo
+
+# Actualiza el sistema operativo a Ubuntu 22.04
+RUN sed -i 's/jammy/lunar/g' /etc/apt/sources.list && \
+    apt update && \
+    apt -y upgrade && \
+    apt -y dist-upgrade && \
+    apt -y autoremove && \
+    apt clean && \
+    apt -y install ubuntu-release-upgrader-core && \
+    do-release-upgrade -f DistUpgradeViewNonInteractive
+    
+
+# LayoutMaster
+#ENV LAYOUTMASTER_PLUGIN=LayoutMaster-1.0.8.zip
+#ENV LAYOUTMASTER_SOURCE=LayoutMaster-1.0.0.zip
+#COPY $LAYOUTMASTER_PLUGIN $HOME
+#COPY $LAYOUTMASTER_SOURCE $HOME
+
+
+
+# Native code
+# USER 1000
+# WORKDIR $HOME
+# RUN wget https://download.jetbrains.com/cpp/CLion-2022.3.tar.gz
+# USER 0
+# RUN tar xzf CLion-*.tar.gz -C /opt/ \
+        # && rm CLion-*.tar.gz
+# RUN apt update && apt install -y cmake gcc g++ clang
+# RUN apt autoremove --purge -y && apt clean && apt autoclean && rm -rf /var/lib/apt/lists/*
+# USER 1000
+# install git  y restored
+
+
+#USER 0
+#WORKDIR /opt
+#RUN apt update && apt install -y git && apt autoremove --purge -y && apt clean && apt autoclean && rm -rf /var/lib/apt/lists/*
+
+#RUN git clone https://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@github.com/obryanvip/nubefirefoxgit
+#como subi a github el firefox tengo que descomprimir el que pesa mas de 100 mb
+#RUN 7z x /opt/nubefirefoxgit/firefox-portable/firefox/libxul.so.7z -o/opt/nubefirefoxgit/firefox-portable/firefox/
